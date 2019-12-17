@@ -5,15 +5,22 @@ trigger git pull when push
 conf/app.ini
 ```ini
 [listen]
-#监听端口
+#http监听端口
 http = 8080
+[git]
+# git所在目录
+path = /usr/bin
 [project]
-#触发的项目
+#项目
 [project.circle]
-#项目名称
+#项目名
 name = circle
 #项目路径
 path = /tmp/testPull
+# 远程仓库
+remote_repo = origin
+# 分支
+branch = master
 ```
 ## 执行
 `nohup go run main/main.go&`

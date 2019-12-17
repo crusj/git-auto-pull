@@ -8,6 +8,10 @@ import (
 	"os/exec"
 )
 
+var (
+	gitPath = ""
+)
+
 func Pull(ctx *fasthttp.RequestCtx) {
 	name := ctx.FormValue("project_name")
 	if name == nil {
@@ -21,7 +25,18 @@ func Pull(ctx *fasthttp.RequestCtx) {
 				logger.Channel("unknown").Info("项目: %s,路径: %s,不存在", name, path)
 			} else {
 				go func() {
-					cmd := exec.Command("/usr/bin/git", "pull", "origin", "master")
+					if gitPath == "" {
+						gitPath = global.Cfg.Section("git").Key("path").String()
+					}
+					remoteRepo := global.Cfg.Section("project." + string(name)).Key("remoteRepo").String()
+					if remoteRepo == "" {
+						remoteRepo = "origin"
+					}
+					branch := global.Cfg.Section("project." + string(name)).Key("branch").String()
+					if branch == "" {
+						branch = "master"
+					}
+					cmd := exec.Command(gitPath+"/git", "pull", remoteRepo, branch)
 					cmd.Dir = path
 					out, err := cmd.Output()
 					if err != nil {
