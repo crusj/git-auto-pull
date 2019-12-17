@@ -1,6 +1,10 @@
 # git-auto-pull
 trigger git pull when push
 
+## 安装
+
+`git clone github/crusj/git-auto-pull`
+
 ## 配置
 conf/app.ini
 ```ini
@@ -23,6 +27,21 @@ remote_repo = origin
 branch = master
 ```
 ## 执行
-`nohup go run main/main.go&`
+```
+cd main/
+nohup go run main/main.go&
+```
 ## 请求
 `http -p Hh POST ip:8080/pull project_name==circle`
+
+## 日志
+
+ 在`conf/log.json`中可配置filename,日志所在目录必须存在否则无法创建日志文件
+ 
+ 日志文件有三中
+ * app.log 记录正确pull的日志对应的项目名和路径
+ * error.log记录pull失败的日志
+ * unknown.log 项目名或项目路径不存在
+
+
+
