@@ -1,5 +1,5 @@
 # git-auto-pull
-trigger git pull when push
+trigger git pull when push and record logs
 
 ## 安装
 
